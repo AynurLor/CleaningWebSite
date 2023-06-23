@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/style.css" type="text/css" />
+    <title>Сайт для клининга</title>
+  </head>
+  <body class="root">
+    <div class="page">
+      <header class="header">
+        <div class="header__logo"></div>
+        <ul class="header__menu">
+          <li class="header__menu-item">Главная</li>
+          <li class="header__menu-item"><a class="header__menu-link" href="#root">О нас</a></li>
+          <li class="header__menu-item"><a class="header__menu-link" href="#price">Прайс</a></li>
+          <li class="header__menu-item"><a class="header__menu-link" href="#calculate">Рассчитать стоимость</a></li>
+          <li class="header__menu-item"><a class="header__menu-link" href="#contacts">Контакты</a></li>
+        </ul>
+        <div class="header__number">
+          <div class="header__number-logo"></div>
+          <a class="header__number-phone" href="tel:+7 (489) 45 52 21"
+            >+7 489 45 52 21</a
+          >
+        </div>
+      </header>
+      <main>
+        <section class="content">
+          <div class="content-container">
+            <h1 class="content__header">
+              <span class="content__header-blue">Профессиональная чистка</span><br>
+              мебели и ковровых покрытий<br> в Московской области
+            </h1>
+            <p class="content__text">
+              Бережно очистим до 97% пятен и неприятных запахов<br> с помощью
+              новейшего европейского оборудования<br> и гипоаллергенных экстракторов
+            </p>
+            <button class="content__btn">Оставить заявку</button>
+          </div>
+          <div class="content-container">
+            <div class="content__rotate"></div>
+            <div class="content__first-img"></div>
+            <div class="content__second-img"></div>
+          </div>
+        </section>
+        <section class="information">
+          <div class="information__image"></div>
+          <div class="information__company">
+            <h2 class="information__company-header" id="root">О нас</h2>
+            <h3 class="information__company-header2">О компании EcoClean</h3>
+
+            <p class="information__company-text">
+              Группа компаний «UberClean» уже более шести лет оказывает
+              профессиональные клининговые услуги в Москве. Наша особенность это
+              всегда фиксированные цены. Мы адаптировали популярную в Европе и
+              Америке услугу выездно химчистки под российского потребителя.
+            </p>
+            <p class="information__company-text">
+              В отличие от иностранных клининговых сервисов, мы рассчитываем
+              стоимость услуги еще до начала работы. Это позволяет нашим
+              клиентам заказать клининг недорого и быть уверенными в том, что
+              окончательная цена чистки не изменится после ее завершения.
+            </p>
+          </div>
+        </section>
+        <section class="advantages">
+          <h1 class="advantages__header">
+            Наши <span class="content__header-blue">преимущества</span>
+          </h1>
+          <div class="advantages-container">
+            <div class="advantages__item-first"></div>
+            <div class="advantages__item-second"></div>
+            <div class="advantages__item-third"></div>
+            <div class="advantages__item-fourth"></div>
+          </div>
+        </section>
+        <section class="price">
+          <h2 class="price__header-main">
+            <span class="content__header-blue" id="price">Прайс</span> на популярные
+            позиции
+          </h2>
+          <div class="price__grid">
+            <div class="price-container">
+              <div class="price__item-1"></div>
+              <h3 class="price__header">Двухместный диван</h3>
+              <p class="price__text">От 1200 руб.</p>
+            </div>
+            <div class="price-container">
+              <div class="price__item-2"></div>
+              <h3 class="price__header">Двухместный диван</h3>
+              <p class="price__text">От 1200 руб.</p>
+            </div>
+            <div class="price-container">
+              <div class="price__item-3"></div>
+              <h3 class="price__header">Двухместный диван</h3>
+              <p class="price__text">От 1200 руб.</p>
+            </div>
+            <div class="price-container">
+              <div class="price__item-4"></div>
+              <h3 class="price__header">Двухместный диван</h3>
+              <p class="price__text">От 1200 руб.</p>
+            </div>
+            <div class="price-container">
+              <div class="price__item-5"></div>
+              <h3 class="price__header">Двухместный диван</h3>
+              <p class="price__text">От 1200 руб.</p>
+            </div>
+            <div class="price-container">
+              <div class="price__item-6"></div>
+              <h3 class="price__header">Двухместный диван</h3>
+              <p class="price__text">От 1200 руб.</p>
+            </div>
+            <div class="price-container">
+              <div class="price__item-7"></div>
+              <h3 class="price__header">Двухместный диван</h3>
+              <p class="price__text">От 1200 руб.</p>
+            </div>
+            <div class="price-container">
+              <div class="price__item-8"></div>
+              <h3 class="price__header">Двухместный диван</h3>
+              <p class="price__text">От 1200 руб.</p>
+            </div>
+            <div class="price-container">
+              <div class="price__item-9"></div>
+              <h3 class="price__header">Двухместный диван</h3>
+              <p class="price__text">От 1200 руб.</p>
+            </div>
+          </div>
+          <div class="container-btn">
+          <button class="price__btn">Показать все цены</button>
+          </div>
+        </section>
+      </main>
+      <section class="calculate">
+        <h3 class="calculate__header"><span class="content__header-blue" id="calculate">Рассчитать</span> стоимость самостоятельно</h3>
+      </section>
+      <section class="form">
+        <h3 class="form__header">Забудьте о пятнах на вашей мебели</h3>
+        <p class="form__text">Защитите себя и своих близких от пылевых клещей, аллергий и бактерий</p>
+        <form class="form__application" method="post" th:action="@{/submit-form}">
+          <input class="form__input" id="name" name="name" required placeholder="Ваше имя"/>
+          <input class="form__input" id="number_phone" name="number_phone" required placeholder="Ваше телефон"/>
+          <button type="submit" class="form__btn">Оставить заявку</button>
+        </form>
+      </section>
+      <footer class="footer">
+        <h3 class="footer__header" id="contacts">Контакты</h3>
+        <div class="footer__menu">
+            <div class="footer__menu-item">
+              <h3 class="footer__menu-header">Адрес</h3>
+              <div class="footer__menu-img1"></div>
+              <p class="footer__menu-text">117449. Россия
+                г. Москва, ул. Курьер д.3</p>
+            </div>
+            <div class="footer__menu-item">
+              <h3 class="footer__menu-header">Телефон</h3>
+              <div class="footer__menu-img2"></div>
+              <p class="footer__menu-text">+7(727) 328-32-05</p>
+            </div>
+            <div class="footer__menu-item">
+              <h3 class="footer__menu-header">Email</h3>
+              <div class="footer__menu-img3"></div>
+              <p class="footer__menu-text">info@glean.kz</p>
+            </div>
+            <div class="footer__menu-item">
+              <h3 class="footer__menu-header">Работаем ежедневно</h3>
+              <div class="footer__menu-img4"></div>
+              <p class="footer__menu-text">с 9-00 до 21-00, без выходных</p>
+            </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
