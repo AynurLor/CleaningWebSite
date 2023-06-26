@@ -31,7 +31,7 @@ public class OrderClient {
     private String numberPhone;
 //    @DateTimeFormat(pattern = "\\w{4}-\\w{2}-\\w{2}$")
     @Column(name="orderdate")
-    private java.sql.Date orderDate;
+            private java.util.Date orderDate;
     @Column(name="amount")
     private Double amount;
 
@@ -54,11 +54,11 @@ public class OrderClient {
     }
 
 
-    public java.sql.Date getOrderDate() {
+    public java.util.Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(java.sql.Date orderDate) {
+    public void setOrderDate(java.util.Date orderDate) {
         this.orderDate = orderDate;
     }
 

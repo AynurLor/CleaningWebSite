@@ -1,6 +1,14 @@
 # Prerequisites
 *.d
 
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
 # Object files
 *.o
 *.ko
@@ -48,6 +56,7 @@
 .tmp_versions/
 ./idea
 /target
+.DS_Store
 modules.order
 Module.symvers
 Mkfile.old

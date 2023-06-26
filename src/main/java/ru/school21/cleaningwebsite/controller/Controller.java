@@ -39,20 +39,23 @@ public class Controller {
         System.out.println("Hello " + name + " with number " + number_phone);
 
         //  Добаляем новую запись в  БД
-        createOrder(name, number_phone);
+        OrderClient data_client = createOrder(name, number_phone);
         //  Отправялем всем юзерам tg  информацию о заказе
-        sendMessage(number_phone);
+        sendMessage("id: " + data_client.getId()
+                + "\nName: " + data_client.getName()
+                + "Phone_number: " + data_client.getNumberPhone());
 
-        try {
-            service.sendEmail("testemailcleaningwebsite@gmail.com", "application",
-                    "name: " + name + "\nnumber_phone: " + number_phone);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+//      email расслка
+//        try {
+//            service.sendEmail("testemailcleaningwebsite@gmail.com", "application",
+//                    "name: " + name + "\nnumber_phone: " + number_phone);
+//        } catch (MessagingException e) {
+//            throw new RuntimeException(e);
+//        }
         return "index";
     }
 
-    private void createOrder(String name, String phone_number) {
+    private OrderClient createOrder(String name, String phone_number) {
         OrderClient orderClient = new OrderClient();
         orderClient.setNumberPhone(phone_number);
         orderClient.setName(name);
@@ -60,11 +63,10 @@ public class Controller {
         orderClient.setAmount(0.0);
         orderClient.setOrderDate(Date.valueOf(LocalDate.now()));
         orderService.saveOrder(orderClient);
-
+        return orderClient;
     }
-    private void updateOrder(String phone_number, String status, Double summa) {
-//        orderService.updateOrder("+79991634752", "APPROVED", 100.0);
-        orderService.updateOrder(phone_number, status, summa);
+    private void updateOrderStatusAndAmount(Integer orderId, String newStatus, Double newAmount) {
+        updateOrderStatusAndAmount(orderId, newStatus, newAmount);
     }
 
     private void sendMessage(String number_phone) {

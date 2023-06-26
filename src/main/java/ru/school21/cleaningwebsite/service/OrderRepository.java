@@ -12,6 +12,11 @@ public interface OrderRepository extends JpaRepository<OrderClient, Integer> {
     @Modifying
     @Query("UPDATE OrderClient o SET o.status = :status, o.amount = :amount WHERE o.numberPhone = :number_phone")
     void updateOrderStatusAndAmount(String number_phone, String status, Double amount);
+//
+//@Query("SELECT CONCAT(CURRENT_DATE - INTERVAL '30 days', ' ~ ', max(orderDate), ' amount: ', sum(amount)) FROM OrderClient WHERE orderDate >= CURRENT_DATE - INTERVAL '30 days'")
+//String getOrdersSummary();
+//}
+
 //    @Query(value = "INSERT INTO orderClient (amount, name, numberphone, orderDate, status) VALUES (:amount, :name, :numberphone, :orderDate, :stat)", nativeQuery = true)
 //    void addOrder(@Param("amount") Double amount, @Param("name") String name, @Param("numberphone") String numberphone, @Param("orderDate") Date orderDate, @Param("status") OrderClient.RequestState stat);
 //    insert into orderclient (amount,name,numberphone,orderdate,status) values (?,?,?,?,?)

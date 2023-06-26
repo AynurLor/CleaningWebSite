@@ -9,7 +9,7 @@ create table orderClient (
     id serial primary key,
     status text not null default 'CREATED',
     name text,
-    numberphone text not null,
+    numberPhone text not null,
     amount numeric(10,2),
     orderDate date default current_date
 );
@@ -23,6 +23,14 @@ create table UserTelegram
     userName text
 );
 
+select min(orderDate) from orderClient;
+update orderClient set status = 'APPROVED', amount = 1500
+where id = 1;
+
+
+SELECT CONCAT((CURRENT_DATE - INTERVAL '30 days')::date, ' ~ ', max(orderDate), ' amount: ', sum(amount))
+FROM orderClient
+WHERE orderDate >= CURRENT_DATE - INTERVAL '30 days';
 
 CREATE OR REPLACE FUNCTION validate_order_status()
     RETURNS TRIGGER AS
