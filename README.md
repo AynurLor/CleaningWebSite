@@ -35,12 +35,12 @@ CleaningWebSite представляет собой Java Spring Boot прило�
 
 Через телеграм бота управляем заказом меням его статус (APPROVED, COMPLETED, FAILED) и сумму заказа
 
-![linux](materials/edit_order)
+![linux](materials/edit_order.png)
 
 ### Меню tg бота 
-![linux](materials/menu_tg)
+![linux](materials/menu_tg.png)
 
 Так же возможно просмотреть статистику заказов за месяц
-![linux](materials/stat_tg)
+![linux](materials/stat_tg.png)
 
     
