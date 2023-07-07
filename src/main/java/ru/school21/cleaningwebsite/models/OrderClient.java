@@ -9,12 +9,6 @@ import java.sql.Date;
 @Entity
 @Table(name="orderclient")
 public class OrderClient {
-//    public enum String {
-//        CREATED,
-//        APPROVED,
-//        COMPLETED,
-//        FAILED
-//    }
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +23,6 @@ public class OrderClient {
     @Pattern(regexp = "\\d{10}", message = "Invalid phone number")
     @Column(name="numberphone")
     private String numberPhone;
-//    @DateTimeFormat(pattern = "\\w{4}-\\w{2}-\\w{2}$")
     @Column(name="orderdate")
             private java.util.Date orderDate;
     @Column(name="amount")

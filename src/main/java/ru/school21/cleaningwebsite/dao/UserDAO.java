@@ -9,11 +9,11 @@ import java.util.List;
 
 @Service
 @Component
-public class UserService {
+public class UserDAO {
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserDAO(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

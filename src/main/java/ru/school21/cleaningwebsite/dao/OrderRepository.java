@@ -28,14 +28,4 @@ public interface OrderRepository extends JpaRepository<OrderClient, Integer> {
     @Query(value = "SELECT * FROM OrderClient", nativeQuery = true)
     List<OrderClient> findAllOrderClient();
 
-//@Query("SELECT CONCAT(CURRENT_DATE - INTERVAL '30 days', ' ~ ', max(orderDate), ' amount: ', sum(amount)) FROM OrderClient WHERE orderDate >= CURRENT_DATE - INTERVAL '30 days'")
-//String getOrdersSummary();
-//}
-
-//    @Query(value = "INSERT INTO orderClient (amount, name, numberphone, orderDate, status) VALUES (:amount, :name, :numberphone, :orderDate, :stat)", nativeQuery = true)
-//    void addOrder(@Param("amount") Double amount, @Param("name") String name, @Param("numberphone") String numberphone, @Param("orderDate") Date orderDate, @Param("status") OrderClient.RequestState stat);
-//    insert into orderclient (amount,name,numberphone,orderdate,status) values (?,?,?,?,?)
-//    @Query("SELECT u FROM OrderClient u WHERE u.numberPhone= :idTelegram")
-//    User findByIdTelegram(@Param("idTelegram")Integer idTelegram);
-//    @Query("insert into OrderClient u (name,numberphone) value()")
 }

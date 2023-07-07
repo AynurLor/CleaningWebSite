@@ -7,7 +7,6 @@ import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ru.school21.cleaningwebsite.dao.OrderRepository;
 import ru.school21.cleaningwebsite.models.OrderClient;
 
 import java.util.Calendar;
@@ -15,15 +14,14 @@ import java.util.Date;
 
 @Service
 @Component
-public class OrderService {
+public class OrderDAO {
     private final OrderRepository orderRepository;
-
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderDAO(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
 
     }
@@ -54,21 +52,14 @@ public class OrderService {
         return (Double) query.getSingleResult();
     }
 
-//    public void editeStatusOrder(String status, Double amount) {
-//        String queryString = 'update orderClient set status = 'APPROVED', amount = 1500\nwhere id = 1';
-//    }
     public void updateOrderStatus(Integer orderId, String newStatus) {
         OrderClient order = entityManager.find(OrderClient.class, orderId);
-        System.out.println("before: " + order);
         order.setStatus(newStatus);
-//        order.setAmount(newAmount);
-        System.out.println("after: " + order);
         entityManager.merge(order);
     }
 
     public void updateOrderAmount(Integer orderId, Double newAmount) {
         OrderClient order = entityManager.find(OrderClient.class, orderId);
-//        order.setStatus(newStatus);
         order.setAmount(newAmount);
         entityManager.merge(order);
     }

@@ -13,8 +13,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.school21.cleaningwebsite.config.BotConfig;
-import ru.school21.cleaningwebsite.dao.OrderService;
-import ru.school21.cleaningwebsite.dao.UserService;
+import ru.school21.cleaningwebsite.dao.OrderDAO;
+import ru.school21.cleaningwebsite.dao.UserDAO;
 import ru.school21.cleaningwebsite.models.OrderClient;
 import ru.school21.cleaningwebsite.models.User;
 
@@ -38,9 +38,9 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Autowired
     final BotConfig config;
     @Autowired
-    final UserService userService;
+    final UserDAO userDAO;
     @Autowired
-    OrderService orderService;
+    OrderDAO orderDAO;
 
     private STATE status = STATE.NONE;
 
@@ -53,10 +53,10 @@ public class TelegramBot extends TelegramLongPollingBot {
             "/statistic - для отслеживания статистики продаж за 30 дней\n" +
             "/help - краткое описание бота\n";
 
-    public TelegramBot(BotConfig config, UserService userService, OrderService orderService) {
+    public TelegramBot(BotConfig config, UserDAO userDAO, OrderDAO orderDAO) {
         this.config = config;
-        this.userService = userService;
-        this.orderService = orderService;
+        this.userDAO = userDAO;
+        this.orderDAO = orderDAO;
         List<BotCommand> listOfCommands = new ArrayList<>();
         listOfCommands.add(new BotCommand("/start", "get message"));
         listOfCommands.add(new BotCommand("/edit", "Change order status"));
@@ -90,10 +90,8 @@ public class TelegramBot extends TelegramLongPollingBot {
                     break;
                 case "/statistic":
                     status = STATE.STATISTIC;
-//                    TODO: добавить 3 конпки с выбором даты
                     sendMessage(chatId, "Statistics for the last 30 days: " +
-                            orderService.getAmountOrderForMouth().toString() + " rub");
-//                    TODO: выгрузить статистику
+                            orderDAO.getAmountOrderForMouth().toString() + " rub");
                     break;
                 case "/help":
                     status = STATE.HELP;
@@ -103,6 +101,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                     trackingOrderNumber(chatId, messageText);
                     break;
             }
+
         } else if (update.hasCallbackQuery()) {
             String callbackData = update.getCallbackQuery().getData();
             long messageId = update.getCallbackQuery().getMessage().getMessageId();
@@ -113,7 +112,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 callbackData.equals("FAILED")) {
                     OrderClient client = isWaitingForOrderNumber.get(chatId);
                     try {
-                    orderService.updateStatus(client.getId(), callbackData);
+                    orderDAO.updateStatus(client.getId(), callbackData);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -129,47 +128,46 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     }
 
+
     private void trackingOrderNumber(Long ChatId, String messageText) {
-//        if (isWaitingForOrderNumber.containsKey(ChatId) && isWaitingForOrderNumber.get(ChatId)) {
-                SendMessage message = new SendMessage();
+
+        SendMessage message = new SendMessage();
+        if (status == STATE.EDIT) {
+            Integer orderNumber = Integer.parseInt(messageText);
+            isWaitingForOrderNumber.put(ChatId, orderDAO.getOrder(orderNumber));
+            message.setChatId(String.valueOf(ChatId));
+            message.setText("Please, set a new order status from the list below");
+
             if (status == STATE.EDIT) {
-                Integer orderNumber = Integer.parseInt(messageText);
-                isWaitingForOrderNumber.put(ChatId, orderService.getOrder(orderNumber));
-                message.setChatId(String.valueOf(ChatId));
-                message.setText("Please, set a new order status from the list below");
-//                sendMessage(ChatId, "Please select status");
-                if (status == STATE.EDIT) {
-//                    updateOrderStatus
 
-                    InlineKeyboardMarkup markupKeyboard =  new InlineKeyboardMarkup();
-                    List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-                    List<InlineKeyboardButton> rowsLine = new ArrayList<>();
-                    var approvedButton = new InlineKeyboardButton();
-                    approvedButton.setText("APPROVED");
-                    approvedButton.setCallbackData("APPROVED");
+                InlineKeyboardMarkup markupKeyboard =  new InlineKeyboardMarkup();
+                List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+                List<InlineKeyboardButton> rowsLine = new ArrayList<>();
+                var approvedButton = new InlineKeyboardButton();
+                approvedButton.setText("APPROVED");
+                approvedButton.setCallbackData("APPROVED");
 
-                    var completedButton = new InlineKeyboardButton();
-                    completedButton.setText("COMPLETED");
-                    completedButton.setCallbackData("COMPLETED");
+                var completedButton = new InlineKeyboardButton();
+                completedButton.setText("COMPLETED");
+                completedButton.setCallbackData("COMPLETED");
 
-                    var failedButton = new InlineKeyboardButton();
-                    failedButton.setText("FAILED");
-                    failedButton.setCallbackData("FAILED");
+                var failedButton = new InlineKeyboardButton();
+                failedButton.setText("FAILED");
+                failedButton.setCallbackData("FAILED");
 
-                    rowsLine.add(approvedButton);
-                    rowsLine.add(completedButton);
-                    rowsLine.add(failedButton);
+                rowsLine.add(approvedButton);
+                rowsLine.add(completedButton);
+                rowsLine.add(failedButton);
 
-                    rowsInline.add(rowsLine);
-                    markupKeyboard.setKeyboard(rowsInline);
-                    message.setReplyMarkup(markupKeyboard);
+                rowsInline.add(rowsLine);
+                markupKeyboard.setKeyboard(rowsInline);
+                message.setReplyMarkup(markupKeyboard);
                 }
-//                TODO: ввод 3 статусов заказа
-//                isWaitingForOrderNumber.remove(ChatId);
+
             } else if (status == STATE.WRITE_AMOUNT_FOR_ORDER) {
                 OrderClient client = isWaitingForOrderNumber.get(ChatId);
                 Double amount = Double.parseDouble(messageText);
-                orderService.updateAmount(client.getId(), amount);
+                orderDAO.updateAmount(client.getId(), amount);
                 status = STATE.NONE;
                 sendMessage(ChatId, "Order is update");
             }
@@ -178,7 +176,6 @@ public class TelegramBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
-//        }
     }
     public void startCommandReceived(long chatId, String name) {
         String answer = "Привет, " + name + ", приятно познокомиться!" +
@@ -192,8 +189,6 @@ public class TelegramBot extends TelegramLongPollingBot {
         message.setChatId(String.valueOf(chatId));
         message.setText(textToSend);
 
-
-
         try {
             execute(message);
         } catch (TelegramApiException e) {
@@ -202,7 +197,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private boolean UserIsPresent(Integer IdTelegram) {
-        return userService.getUser(IdTelegram) != null ? true: false;
+        return userDAO.getUser(IdTelegram) != null ? true: false;
     }
     private void saveDataBase(Update update) {
         User user = new User();
@@ -215,7 +210,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         user.setFirstName(message.getChat().getFirstName());
         user.setLastName(message.getChat().getLastName());
 
-        userService.saveUser(user);
+        userDAO.saveUser(user);
     }
 
 

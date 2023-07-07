@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.school21.cleaningwebsite.models.OrderClient;
 import ru.school21.cleaningwebsite.models.User;
 import ru.school21.cleaningwebsite.service.DefaultEmailService;
-import ru.school21.cleaningwebsite.dao.OrderService;
-import ru.school21.cleaningwebsite.dao.UserService;
+import ru.school21.cleaningwebsite.dao.OrderDAO;
+import ru.school21.cleaningwebsite.dao.UserDAO;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -18,14 +18,14 @@ public class Controller {
     @Autowired
     TelegramBot bot;
     @Autowired
-    final UserService userService;
+    final UserDAO userDAO;
     @Autowired
-    final OrderService orderService;
+    final OrderDAO orderDAO;
 
-    public Controller(DefaultEmailService service, UserService userService, OrderService orderService) {
+    public Controller(DefaultEmailService service, UserDAO userDAO, OrderDAO orderDAO) {
         this.service = service;
-        this.userService = userService;
-        this.orderService = orderService;
+        this.userDAO = userDAO;
+        this.orderDAO = orderDAO;
     }
 
     @GetMapping("/hello")
@@ -43,7 +43,7 @@ public class Controller {
                 + "\nName: " + data_client.getName()
                 + "Phone_number: " + data_client.getNumberPhone());
 
-//      email расслка
+//      Email расслка, который будет вкл в дальнейшем
 //        try {
 //            service.sendEmail("testemailcleaningwebsite@gmail.com", "application",
 //                    "name: " + name + "\nnumber_phone: " + number_phone);
@@ -60,7 +60,7 @@ public class Controller {
         orderClient.setStatus("CREATED");
         orderClient.setAmount(0.0);
         orderClient.setOrderDate(Date.valueOf(LocalDate.now()));
-        orderService.saveOrder(orderClient);
+        orderDAO.saveOrder(orderClient);
         return orderClient;
     }
     private void updateOrderStatusAndAmount(Integer orderId, String newStatus, Double newAmount) {
@@ -68,7 +68,7 @@ public class Controller {
     }
 
     private void sendMessage(String number_phone) {
-        for (User user : userService.getAllUser()) {
+        for (User user : userDAO.getAllUser()) {
             bot.sendMessage(user.getIdTelegram(),
                     "new order by phone number: " + number_phone);
         }
