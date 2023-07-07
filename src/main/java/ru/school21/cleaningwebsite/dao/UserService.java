@@ -1,4 +1,4 @@
-package ru.school21.cleaningwebsite.service;
+package ru.school21.cleaningwebsite.dao;
 
 import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;

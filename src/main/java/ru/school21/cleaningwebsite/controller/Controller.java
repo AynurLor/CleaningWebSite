@@ -4,11 +4,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.school21.cleaningwebsite.models.OrderClient;
 import ru.school21.cleaningwebsite.models.User;
 import ru.school21.cleaningwebsite.service.DefaultEmailService;
-import ru.school21.cleaningwebsite.service.OrderService;
-import ru.school21.cleaningwebsite.service.TelegramBot;
-import ru.school21.cleaningwebsite.service.UserService;
+import ru.school21.cleaningwebsite.dao.OrderService;
+import ru.school21.cleaningwebsite.dao.UserService;
 
-import javax.mail.MessagingException;
 import java.sql.Date;
 import java.time.LocalDate;
 
